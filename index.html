@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>form-utils.js — full demo</title>
+  <link rel="stylesheet" href="classless.css">
+  <style>
+    .row { display: flex; gap: 0.5rem; align-items: center; }
+
+    [data-strength="1"] { color: #e53e3e; font-weight: 600; font-size: 0.88rem; }
+    [data-strength="2"] { color: #dd6b20; font-weight: 600; font-size: 0.88rem; }
+    [data-strength="3"] { color: #38a169; font-weight: 600; font-size: 0.88rem; }
+    [data-strength="4"] { color: #2b6cb0; font-weight: 600; font-size: 0.88rem; }
+
+    [data-over="true"] { color: #e53e3e; font-weight: 600; }
+
+    [show-password] { cursor: pointer; display: flex; align-items: center; color: #888; padding: 0 4px; }
+    [show-password]:hover { color: #333; }
+    [show-password] svg { width: 20px; height: 20px; }
+
+    [clear-input] { cursor: pointer; color: #aaa; font-size: 1rem; padding: 0 4px; line-height: 1; user-select: none; }
+    [clear-input]:hover { color: #e53e3e; }
+
+    [copy-input] { cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #764ba2; user-select: none; white-space: nowrap; }
+    [copy-input]:hover { text-decoration: underline; }
+
+    [file-preview] { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; }
+    [file-preview] [data-file] { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; font-size: 0.82rem; color: #666; max-width: 120px; }
+    [file-preview] img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; }
+    [file-preview] span { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; text-align: center; }
+
+    [countdown] { display: flex; gap: 1.25rem; }
+    [countdown] span { display: flex; flex-direction: column; align-items: center; font-size: 2.2rem; font-weight: 700; line-height: 1; }
+    [countdown] small { font-size: 0.68rem; font-weight: 400; color: #888; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div><h1>form-utils.js — full demo</h1></div>
+  </header>
+
+  <main>
+
+    <!-- COUNTDOWN -->
+    <section>
+      <h2>countdown</h2>
+      <p>Counts down to a future date in real time.</p>
+      <div countdown="2026-12-31T23:59:59"
+           countdown-days="days"
+           countdown-hours="hours"
+           countdown-minutes="min"
+           countdown-seconds="sec"
+           countdown-done="🎉 Done!">
+      </div>
+    </section>
+
+    <!-- MASK -->
+    <section>
+      <h2>mask</h2>
+      <p><code>9</code> = digit · <code>A</code> = letter · <code>*</code> = any · anything else = literal separator</p>
+      <form>
+        <label>Phone
+          <input mask="(99) 99999-9999" placeholder="(00) 00000-0000">
+        </label>
+        <label>Date
+          <input mask="99/99/9999" placeholder="DD/MM/YYYY">
+        </label>
+        <label>CPF
+          <input mask="999.999.999-99" placeholder="000.000.000-00">
+        </label>
+        <label>Card number
+          <input mask="9999 9999 9999 9999" placeholder="0000 0000 0000 0000">
+        </label>
+      </form>
+    </section>
+
+    <!-- CASE TRANSFORM -->
+    <section>
+      <h2>Case transform</h2>
+      <form>
+        <label>uppercase <code>[uppercase]</code>
+          <input uppercase placeholder="type anything…">
+        </label>
+        <label>lowercase <code>[lowercase]</code>
+          <input lowercase placeholder="TYPE ANYTHING…">
+        </label>
+        <label>capitalize <code>[capitalize]</code>
+          <input capitalize placeholder="each word gets capitalized">
+        </label>
+      </form>
+    </section>
+
+    <!-- ONLY LETTERS / ONLY NUMBERS -->
+    <section>
+      <h2>only-letters &amp; only-numbers</h2>
+      <form>
+        <label>Full name <code>[only-letters]</code>
+          <input only-letters placeholder="Letters and spaces only">
+        </label>
+        <label>Age <code>[only-numbers]</code>
+          <input only-numbers placeholder="Digits only">
+        </label>
+      </form>
+    </section>
+
+    <!-- FLOAT -->
+    <section>
+      <h2>float</h2>
+      <p>Formats as a currency float (BR). Clamps to <code>min</code>/<code>max</code> on blur.</p>
+      <form>
+        <label>Amount (min 1,00 · max 9.999,99)
+          <input float min="1" max="9999.99" placeholder="0,00">
+        </label>
+      </form>
+    </section>
+
+    <!-- AUTO TRIM -->
+    <section>
+      <h2>auto-trim</h2>
+      <p>All inputs and textareas trim on blur automatically — no attribute needed.</p>
+      <form>
+        <label>Try adding spaces around your text then tab away
+          <input placeholder="   spaces vanish on blur   ">
+        </label>
+      </form>
+    </section>
+
+    <!-- AUTOSAVE -->
+    <section>
+      <h2>autosave</h2>
+      <p>Values are saved to <code>localStorage</code> on every change and restored on page reload. Clears on submit/reset.</p>
+      <form autosave="demo-form">
+        <label>Name
+          <input name="as_name" placeholder="Type something, then reload the page">
+        </label>
+        <label>Notes
+          <textarea name="as_notes" placeholder="This will survive a reload…"></textarea>
+        </label>
+        <div class="row">
+          <button type="submit">Submit (clears saved)</button>
+          <button type="reset" style="background:transparent;color:#888;border:1px solid #ddd;box-shadow:none;">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- DIRTY WARNING -->
+    <section>
+      <h2>dirty-warning</h2>
+      <p>If you modify this form and try to close the tab or navigate away, the browser will warn you.</p>
+      <form dirty-warning="You have unsaved changes. Leave anyway?">
+        <label>Edit me, then try to close the tab
+          <input name="dw_field" placeholder="Type something…">
+        </label>
+        <button type="submit">Submit (clears warning)</button>
+      </form>
+    </section>
+
+    <!-- FILE PREVIEW -->
+    <section>
+      <h2>file-preview</h2>
+      <p>Images get thumbnails; other files show name + size.</p>
+      <form>
+        <label>Pick files
+          <input type="file" name="myfiles" multiple>
+        </label>
+      </form>
+      <div file-preview="myfiles"></div>
+    </section>
+
+    <!-- COPY INPUT -->
+    <section>
+      <h2>copy-input</h2>
+      <form>
+        <label>API key
+          <input name="apikey" value="sk-abc123xyz456-supersecret">
+        </label>
+      </form>
+      <div class="row" style="margin-top:0.6rem">
+        <span copy-input="apikey" copy-input-update="✓ Copied!">Copy to clipboard</span>
+      </div>
+    </section>
+
+    <!-- PASSWORD: STRENGTH + SHOW + CLEAR -->
+    <section>
+      <h2>strength + show-password + clear-input</h2>
+      <form>
+        <label>Password
+          <div class="row">
+            <input type="password" name="pass" placeholder="Type a password…" style="flex:1">
+            <span show-password="pass"></span>
+            <span clear-input="pass">✕</span>
+          </div>
+        </label>
+      </form>
+      <p style="margin-top:0.5rem">Strength: <span strength="pass" strength-messages="Fraca;Média;Forte;Muito forte"></span></p>
+    </section>
+
+    <!-- COUNT CHAR -->
+    <section>
+      <h2>count-char</h2>
+      <form>
+        <label>Bio (no limit)
+          <textarea name="bio" placeholder="Tell us about yourself…"></textarea>
+        </label>
+        <small><span count-char="bio"></span> characters</small>
+
+        <label style="margin-top:1rem">Tweet (max 280, turns red when over)
+          <div class="row">
+            <textarea name="tweet" placeholder="What's happening?" style="flex:1"></textarea>
+            <span clear-input="tweet">✕</span>
+          </div>
+        </label>
+        <small><span count-char="tweet" count-char-max="280"></span></small>
+      </form>
+    </section>
+
+    <!-- ERROR FUNCTION -->
+    <section>
+      <h2>error(name, message)</h2>
+      <p>Click the button to trigger a programmatic error on the input. It clears as soon as you start typing.</p>
+      <form>
+        <label>Username
+          <input name="username" placeholder="Pick a username">
+        </label>
+        <button type="button" onclick="error('username', 'This username is already taken')">Simulate error</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>form-utils.js — full demo</div>
+  </footer>
+
+  <script src="form-utils.js"></script>
+</body>
+</html>

@@ -10,10 +10,8 @@ Form utilities with zero dependencies. Just add attributes to your HTML elements
 
 ## Size
 
-- **minified:** ~3.9KB
-- **compressed (tar.gz):** ~1.6KB
-
-That's it. That's the whole library.
+- **minified:** ~9.2KB
+- **compressed (gzip):** ~3.1KB
 
 ## Quick Start
 
@@ -22,6 +20,8 @@ That's it. That's the whole library.
 <input lowercase placeholder="type here">
 <input uppercase placeholder="TYPE HERE">
 <input type="file" accept="image/*">
+<input type="password" name="password">
+<button show-password="password"></button>
 
 <script src="form-utils.min.js"></script>
 ```
@@ -61,8 +61,10 @@ Auto-transform input as you type.
 Auto-preview images and videos when selected.
 
 ```html
-<input type="file" accept="image/*">
-<input type="file" accept="video/*">
+<input type="file" name="upload" accept="image/*">
+<div file-preview="upload"></div>
+<input type="file" name="video" accept="video/*">
+<div file-preview="video"></div>
 ```
 
 ### Float Fields
@@ -78,8 +80,9 @@ Decimal number input with formatting.
 Add a copy button to any input.
 
 ```html
-<input value="abc123" copyable>
-<input value="secret" copyable-text="Copy;Copied!">
+<input value="abc123" name="api-key">
+<button copy-input="api-key">Copy</button>
+<button copy-input="api-key" copy-input-update="Copied!">Copy</button>
 ```
 
 ### Password Helpers
@@ -87,14 +90,114 @@ Add a copy button to any input.
 Show/hide toggle and strength meter for password fields.
 
 ```html
-<input type="password" strength>
-<input type="password" strength strength-messages="Weak;Medium;Strong;Very Strong">
-<input type="password" password-text="Show;Hide">
+<input type="password" name="password">
+<button show-password="password"></button>
+<span strength="password" strength-messages="Weak;Medium;Strong;Very Strong"></span>
 ```
 
 ### Auto Trim
 
 Automatically trim whitespace on blur (enabled for all inputs).
+
+### File Preview
+
+Preview files when selected.
+
+```html
+<input type="file" name="upload" accept="image/*">
+<div file-preview="upload"></div>
+```
+
+### Copy Button
+
+Add a copy button to any input.
+
+```html
+<input value="abc123" name="api-key">
+<button copy-input="api-key">Copy</button>
+<button copy-input="api-key" copy-input-update="Copied!">Copy</button>
+```
+
+### Show/Hide Password
+
+Toggle password visibility.
+
+```html
+<input type="password" name="password">
+<button show-password="password"></button>
+```
+
+### Countdown Timer
+
+Display a countdown to a specific date/time.
+
+```html
+<div countdown="2025-12-31T23:59:59"></div>
+<div countdown="2025-12-31T23:59:59" countdown-days="d" countdown-hours="h" countdown-minutes="m" countdown-seconds="s"></div>
+```
+
+### Clear Input Button
+
+Add a button to clear an input field.
+
+```html
+<input type="text" name="search">
+<button clear-input="search">Clear</button>
+```
+
+### Character Counter
+
+Display character count for inputs.
+
+```html
+<textarea name="bio" maxlength="200"></textarea>
+<span count-char="bio" count-char-max="200"></span>
+```
+
+### Form Autosave
+
+Automatically save form data to localStorage.
+
+```html
+<form autosave="my-form">
+  <input name="email">
+  <textarea name="message"></textarea>
+</form>
+```
+
+### Dirty Warning
+
+Show warning when leaving page with unsaved changes.
+
+```html
+<form dirty-warning>
+  <input name="data">
+</form>
+```
+
+### Only Letters
+
+Restrict input to letters only.
+
+```html
+<input only-letters placeholder="letters only">
+```
+
+### Only Numbers
+
+Restrict input to numbers only.
+
+```html
+<input only-numbers placeholder="numbers only">
+```
+
+### Error Display
+
+Programmatically show validation errors.
+
+```javascript
+error('email', 'Please enter a valid email');
+```
 
 ---
 
@@ -161,12 +264,14 @@ Automatically trim whitespace on blur (enabled for all inputs).
 
     <div class="field">
       <label>Upload image</label>
-      <input type="file" accept="image/*">
+      <input type="file" name="image-upload" accept="image/*">
+      <div file-preview="image-upload"></div>
     </div>
 
     <div class="field">
       <label>Upload video</label>
-      <input type="file" accept="video/*">
+      <input type="file" name="video-upload" accept="video/*">
+      <div file-preview="video-upload"></div>
     </div>
   </section>
 
@@ -184,7 +289,8 @@ Automatically trim whitespace on blur (enabled for all inputs).
 
     <div class="field">
       <label>API Key</label>
-      <input value="abc123xyz" copyable copyable-text="Copy;Copied!">
+      <input name="api-key" value="abc123xyz">
+      <button copy-input="api-key">Copy</button>
     </div>
   </section>
 
@@ -193,12 +299,14 @@ Automatically trim whitespace on blur (enabled for all inputs).
 
     <div class="field">
       <label>Password with toggle</label>
-      <input type="password" password-text="Show;Hide">
+      <input type="password" name="password">
+      <button show-password="password">Show</button>
     </div>
 
     <div class="field">
       <label>Password with strength</label>
-      <input type="password" strength strength-messages="Weak;Medium;Strong;Very Strong">
+      <input type="password" name="password-strength">
+      <span strength="password-strength" strength-messages="Weak;Medium;Strong;Very Strong"></span>
     </div>
   </section>
 
